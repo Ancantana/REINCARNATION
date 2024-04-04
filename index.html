@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Floating Containers</title>
+    <style>
+        body {
+            background-color: #000000;
+            color: #FF42EA;
+            font-size: 18px;
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            cursor: url('icon.png'), auto;
+        }
+        .floating-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            grid-auto-rows: minmax(100px, auto);
+            gap: 10px;
+            padding: 10px;
+            box-sizing: border-box;
+            pointer-events: none;
+        }
+        .floating-rectangle {
+            background-color: #000000;
+            border: 1px solid #DC42FF;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 10px;
+            transition: transform 0.5s, opacity 1s;
+            pointer-events: auto;
+            position: relative;
+        }
+        .website-link {
+            text-decoration: none;
+            color: inherit;
+            cursor: pointer;
+        }
+        .connector {
+            position: absolute;
+            background-color: #6A6142;
+            width: 5px;
+            z-index: -1;
+        }
+    </style>
+</head>
+<body>
+    <div class="floating-container">
+        <!-- Restored original floating rectangles -->
+        <div class="floating-rectangle">Foreign Jazz Record</div>
+        <div class="floating-rectangle">League of Legends Player (Derogatory)</div>
+        <div class="floating-rectangle">Supervillain with a nemesis who's 10 years old</div>
+        <div class="floating-rectangle">Candid Girl</div>
+        <div class="floating-rectangle">20 year old man with handpoke tattoos</div>
+        <div class="floating-rectangle">Alpha Male</div>
+        <div class="floating-rectangle">Gym bro taking creatine</div>
+        <div class="floating-rectangle">Software Engineer with no personality</div>
+        <div class="floating-rectangle"> LinkedIn engagement farmer</div>
+        <div class="floating-rectangle">Immortal being who has seen it all</div>
+        <div class="floating-rectangle">Bisexual Frat Bro</div>
+        <div class="floating-rectangle">Man who likes to fish on sundays</div>
+        <div class="floating-rectangle">Pathological liar who is actually really nice</div>
+        <div class="floating-rectangle">Walmart Employee</div>
+        <div class="floating-rectangle">Millenial Social Media Manager</div>
+        <div class="floating-rectangle">Pikachu</div>
+        <!-- Added more floating rectangles -->
+               <div class="floating-rectangle">Omega Level Mutant</div>
+        <div class="floating-rectangle">Fortnite Skin</div>
+        <div class="floating-rectangle">Burnt Out Elementary School Teacher</div>
+        <div class="floating-rectangle">Weeaboo who means well</div>
+        <div class="floating-rectangle">Chief Financial Officer</div>
+        <div class="floating-rectangle">Plusle</div>
+       <div class="floating-rectangle">Polar Bear with Laser Vision</div>
+        <div class="floating-rectangle">Kleptomaniac Crow</div>
+        <div class="floating-rectangle">Soundcloud Rapper (good)</div>
+        <div class="floating-rectangle">Golden Retriever in a White Family</div>
+        <div class="floating-rectangle">Man with bad Podcast</div>
+        <div class="floating-rectangle">Twitter Thirstrapper</div>
+        <div class="floating-rectangle">Oil Rig Worker</div>
+        <div class="floating-rectangle">Half-Broken Umbrella</div>
+        <div class="floating-rectangle">Depop Reseller</div>
+        <div class="floating-rectangle">Discord Mod</div>
+        <div class="floating-rectangle">Standup Comedian (Bad)</div>
+        <div class="floating-rectangle">Pastry Chef</div>
+        <div class="floating-rectangle">Thot Daughter</div>
+        <div class="floating-rectangle">Gay Son</div>
+      <div class="floating-rectangle">Persian Cat</div>
+        <div class="floating-rectangle">DJ</div>
+        <div class="floating-rectangle">Rubix Cube</div>
+        <div class="floating-rectangle">Professional Scuba Diver</div>
+        <div class="floating-rectangle">Mildly Oversized Labrador</div>
+        <div class="floating-rectangle">KPOP group stan (bad)</div>
+        <div class="floating-rectangle">Stanley Cup</div>
+        <div class="floating-rectangle">Porcelain Plate</div>
+        <div class="floating-rectangle">Jojo's Character</div>
+    </div>
+    <script>
+        const floatingRects = document.querySelectorAll('.floating-rectangle');
+        const body = document.body;
+
+        // Choose a random floating rectangle that won't disappear
+        const survivingRectIndex = Math.floor(Math.random() * floatingRects.length);
+        const survivingRect = floatingRects[survivingRectIndex];
+
+        // Create connector lines once
+        const connectors = [];
+        for (let i = 0; i < floatingRects.length; i++) {
+            const rect = floatingRects[i];
+            const connectedRects = [];
+            for (let j = 0; j < 3; j++) { // Connect each rectangle to 3 random others
+                const randomIndex = Math.floor(Math.random() * floatingRects.length);
+                if (randomIndex !== i && !connectedRects.includes(randomIndex)) {
+                    connectedRects.push(randomIndex);
+                    const randomRect = floatingRects[randomIndex];
+                    const rectX = rect.getBoundingClientRect().left;
+                    const rectY = rect.getBoundingClientRect().top;
+                    const rectWidth = rect.offsetWidth;
+                    const rectHeight = rect.offsetHeight;
+                    const randomRectX = randomRect.getBoundingClientRect().left;
+                    const randomRectY = randomRect.getBoundingClientRect().top;
+                    const randomRectWidth = randomRect.offsetWidth;
+                    const randomRectHeight = randomRect.offsetHeight;
+
+                    const connector = document.createElement('div');
+                    connector.className = 'connector';
+
+                    const connectorPath = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+                    const startX = rectX + rectWidth / 2;
+                    const startY = rectY + rectHeight / 2;
+                    const endX = randomRectX + randomRectWidth / 2;
+                    const endY = randomRectY + randomRectHeight / 2;
+                    const controlX = (startX + endX) / 2 + (endY - startY) * 0.3; // Adjust control point position
+                    const controlY = (startY + endY) / 2 + (startX - endX) * 0.3; // Adjust control point position
+                    const pathData = `M ${startX} ${startY} Q ${controlX} ${controlY} ${endX} ${endY}`;
+
+                    connectorPath.setAttribute('d', pathData);
+                    connectorPath.setAttribute('fill', 'none');
+                    connectorPath.setAttribute('stroke', '#6A6142');
+                    connectorPath.setAttribute('stroke-width', '5');
+
+                    connector.appendChild(connectorPath);
+                    rect.appendChild(connector);
+                    connectors.push({ connector, rect });
+                }
+            }
+        }
+
+        function checkCollisions() {
+            const collidedRects = [];
+            for (let i = 0; i < floatingRects.length; i++) {
+                const rect1 = floatingRects[i];
+                if (rect1 === survivingRect) continue; // Skip the surviving rectangle
+
+                const rect1X = rect1.getBoundingClientRect().left;
+                const rect1Y = rect1.getBoundingClientRect().top;
+                const rect1Width = rect1.offsetWidth;
+                const rect1Height = rect1.offsetHeight;
+
+                for (let j = i + 1; j < floatingRects.length; j++) {
+                    const rect2 = floatingRects[j];
+                    if (rect2 === survivingRect) continue; // Skip the surviving rectangle
+
+                    const rect2X = rect2.getBoundingClientRect().left;
+                    const rect2Y = rect2.getBoundingClientRect().top;
+                    const rect2Width = rect2.offsetWidth;
+                    const rect2Height = rect2.offsetHeight;
+
+                    if (
+                        rect1X < rect2X + rect2Width &&
+                        rect1X + rect1Width > rect2X &&
+                        rect1Y < rect2Y + rect2Height &&
+                        rect1Y + rect1Height > rect2Y
+                    ) {
+                        collidedRects.push(rect1, rect2);
+                    }
+                }
+            }
+
+            // Remove hidden rectangles after a delay
+            setTimeout(() => {
+                collidedRects.forEach((rect) => {
+                    if (rect !== survivingRect) {
+                        rect.style.opacity = '0'; // Set opacity to 0 for a slower fade-out effect
+                        setTimeout(() => {
+                            rect.style.display = 'none';
+                        }, 1000); // Delay of 1 second
+                    }
+                });
+            }, 1000); // Delay of 1 second
+        }
+
+        document.addEventListener('mousemove', (event) => {
+            const mouseX = event.clientX;
+            const mouseY = event.clientY;
+
+            floatingRects.forEach((rect) => {
+                const rectX = rect.getBoundingClientRect().left;
+                const rectY = rect.getBoundingClientRect().top;
+                const rectWidth = rect.offsetWidth;
+                const rectHeight = rect.offsetHeight;
+
+                const centerX = rectX + rectWidth / 2;
+                const centerY = rectY + rectHeight / 2;
+
+                const distanceX = mouseX - centerX;
+                const distanceY = mouseY - centerY;
+
+                const moveX = distanceX > 0 ? Math.min(distanceX, 400) : Math.max(distanceX, -400);
+                const moveY = distanceY > 0 ? Math.min(distanceY, 400) : Math.max(distanceY, -400);
+
+                const newX = Math.max(10, Math.min(rectX - moveX, window.innerWidth - rectWidth - 10));
+                const newY = Math.max(10, Math.min(rectY - moveY, window.innerHeight - rectHeight - 10));
+
+                rect.style.transform = `translate(${newX - rectX}px, ${newY - rectY}px)`;
+            });
+
+            // Update connector positions and shapes
+            connectors.forEach(({ connector, rect }) => {
+                const rectX = rect.getBoundingClientRect().left;
+                const rectY = rect.getBoundingClientRect().top;
+                const rectWidth = rect.offsetWidth;
+                const rectHeight = rect.offsetHeight;
+                const startX = rectX + rectWidth / 2;
+                const startY = rectY + rectHeight / 2;
+
+                const connectorPath = connector.querySelector('path');
+                const endX = parseFloat(connectorPath.getAttribute('d').split(' ')[4]);
+                const endY = parseFloat(connectorPath.getAttribute('d').split(' ')[5]);
+                const controlX = (startX + endX) / 2 + (endY - startY) * 0.3; // Adjust control point position
+                const controlY = (startY + endY) / 2 + (startX - endX) * 0.3; // Adjust control point position
+                const pathData = `M ${startX} ${startY} Q ${controlX} ${controlY} ${endX} ${endY}`;
+
+                connectorPath.setAttribute('d', pathData);
+            });
+
+            checkCollisions();
+        });
+    </script>
+</body>
+</html>
